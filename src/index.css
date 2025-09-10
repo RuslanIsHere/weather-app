@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+:root {
+  /* Neutral */
+  --neutral-900: #02012C;
+  --neutral-800: #262540;
+  --neutral-700: #302F4A;
+  --neutral-600: #3C3B5E;
+  --neutral-300: #ACACB7;
+  --neutral-200: #D4D3D9;
+  --neutral-0:   #FFFFFF;
+
+  /* Orange */
+  --orange-500: #FF820A;
+
+  /* Blue */
+  --blue-500: #4658D9;
+  --blue-700: #2B1B9C;
+}
+
+/* ---- base (минимум) ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--neutral-900);
+  color: var(--neutral-0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer components {
+  .text-preset-1 {
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 96px;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 100%;
+    letter-spacing: -2px;
+  }
+  .text-preset-2 {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 120%;
+  }
+  .text-preset-3 {
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 100%;
+  }
+  .text-preset-4 {
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 120%;
+  }
+  .text-preset-5 {
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 120%;
+  }
+  .text-preset-5m {
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 120%;
+  }
+  .text-preset-6 {
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 120%;
+  }
+  .text-preset-7 {
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 120%;
+  }
+  .text-preset-8 {
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 120%;
+  }
+}
+
+.container {
+  max-width: 1200px;          /* как в макете 1440 → контейнер 1200 */
+  margin-inline: auto;        /* центрируем */
+  padding-inline: 16px;       /* мобильные поля по бокам */
+  padding-block: 24px;
+}
