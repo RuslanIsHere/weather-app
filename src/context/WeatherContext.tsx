@@ -1,29 +1,22 @@
 import { createContext, useContext, useState } from "react";
-
-export type Units = "metric" | "imperial";
-export type Place = { name: string; lat: number; lon: number } | null;
+import type { Place, Units } from "../types";
 
 type Ctx = {
-    place: Place;
+    place: Place | null;
     units: Units;
-    setPlace: (p: Place) => void;
+    setPlace: (p: Place | null) => void;
     setUnits: (u: Units) => void;
 };
-
-const WeatherCtx = createContext<Ctx | null>(null);
+const C = createContext<Ctx | null>(null);
 
 export function WeatherProvider({ children }: { children: React.ReactNode }) {
-    const [place, setPlace] = useState<Place>(null);
+    const [place, setPlace] = useState<Place | null>(null);
     const [units, setUnits] = useState<Units>("metric");
-    return (
-        <WeatherCtx.Provider value={{ place, units, setPlace, setUnits }}>
-            {children}
-        </WeatherCtx.Provider>
-    );
+    return <C.Provider value={{ place, units, setPlace, setUnits }}>{children}</C.Provider>;
 }
-
 export const useWeatherCtx = () => {
-    const ctx = useContext(WeatherCtx);
-    if (!ctx) throw new Error("useWeatherCtx must be used inside WeatherProvider");
-    return ctx;
+    const v = useContext(C);
+    if (!v) throw new Error("useWeatherCtx must be used inside provider");
+    return v;
 };
+
