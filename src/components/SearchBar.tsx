@@ -2,13 +2,15 @@ import { useState } from "react";
 import searchIcon from "../assets/images/icon-search.svg";
 import { geocode } from "../api/geocoding";
 import { useWeatherCtx } from "../context/WeatherContext";
+import Search from "antd/es/input/Search";
+import {Tooltip} from "antd";
 
 export default function SearchBar() {
     const [query, setQuery] = useState("");
     const [pending, setPending] = useState(false);
     const { setPlace } = useWeatherCtx();
 
-    async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function onSearch(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (pending) return;                 // защита от дабл-кликов
         const q = query.trim();
@@ -35,33 +37,15 @@ export default function SearchBar() {
     }
 
     return (
-        <form
-            className="flex items-center gap-4 w-full max-w-md mx-auto mt-8"
-            onSubmit={onSubmit}
-        >
-            <div className="relative flex-1">
-                <img
-                    src={searchIcon}
-                    alt="Search"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5"
-                />
-                <input
-                    name="search"
-                    type="text"
-                    autoComplete="off"
-                    placeholder="Search for a place..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    className="w-full text-present-5 rounded-[12px] pl-10 pr-4 py-2 bg-[#262540] placeholder-gray-400"
-                />
-            </div>
-            <button
-                type="submit"
-                disabled={pending || !query.trim()}
-                className="px-4 py-2 rounded-[12px] bg-blue-600 text-white font-medium hover:bg-blue-500 transition disabled:opacity-60"
-            >
-                {pending ? "Searching..." : "Search"}
-            </button>
-        </form>
+        <Search
+            placeholder="Search for a place..."
+            allowClear
+            enterButton="Search"
+            size="large"
+            onSearch={onSearch}
+            prefix={
+                <img src={searchIcon} alt="" style={{ width: 16, height: 16 }} />
+            }
+        />
     );
 }
