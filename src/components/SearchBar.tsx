@@ -12,7 +12,6 @@ export default function SearchBar() {
     const [options, setOptions] = useState<Opt[]>([]);
     const t = useRef<number | null>(null);
 
-    // --- подсказки с геокодинга ---
     async function geoSuggest(q: string): Promise<Opt[]> {
         if (!q) return [];
         const r = await fetch(
@@ -22,12 +21,11 @@ export default function SearchBar() {
         const rows: any[] = j?.results ?? [];
         return rows.map((x) => {
             const label = `${x.name}${x.admin1 ? ", " + x.admin1 : ""}, ${x.country_code}`;
-            const key = `${x.latitude},${x.longitude}`; // уникальность
+            const key = `${x.latitude},${x.longitude}`;
             return { value: `${label}::${key}`, label, lat: x.latitude, lon: x.longitude };
         });
     }
 
-    // --- погода как в доках ---
     async function loadWeather(lat: number, lon: number, where: string) {
         const url = "https://api.open-meteo.com/v1/forecast";
         const [res] = await fetchWeatherApi(url, { latitude: lat, longitude: lon, hourly: "temperature_2m" });
@@ -39,14 +37,11 @@ export default function SearchBar() {
         console.log("First 5:", times.slice(0, 5).map((t, i) => [t.toISOString(), temps[i]]));
     }
 
-    // выбор из списка
-    const onSelect = (_: string, opt: any) => {
-        const o = opt as Opt;
-        setValue(o.label);            // показать красивое имя
-        loadWeather(o.lat, o.lon, o.label);
+    const onSelect = (_: string, opt: Opt) => {
+        setValue(opt.label);
+        loadWeather(opt.lat, opt.lon, opt.label);
     };
 
-    // клик по кнопке Search — берём 1-ю подсказку
     const onSearchButton = async (text: string) => {
         const arr = await geoSuggest(text);
         if (arr[0]) {
@@ -61,9 +56,9 @@ export default function SearchBar() {
         <AutoComplete
             value={value}
             options={options}
-            optionLabelProp="label"       // в поле подставляется label, не value
             style={{ width: "100%" }}
             onSelect={onSelect}
+            filterOption={false}
             onSearch={(text) => {
                 setValue(text);
                 if (t.current) clearTimeout(t.current);

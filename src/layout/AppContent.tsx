@@ -1,6 +1,7 @@
 import {Layout, Typography} from "antd";
 import * as React from "react";
 import SearchBar from "../components/SearchBar.tsx";
+import WeatherCard from "../components/WeatherCard.tsx";
 
 const { Title } = Typography;
 
@@ -15,6 +16,7 @@ export default function AppContent() {
         <Layout.Content style={contentStyle}>
             <Title className='!text-[var(--neutral-0)] text-preset-2'> How's the sky looking today? </Title>
             <SearchBar/>
+            <WeatherCard/>
         </Layout.Content>
     )
 }
